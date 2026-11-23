@@ -1,0 +1,28 @@
+====================================================================
+TÀI LIỆU MÔ TẢ KIẾN TRÚC HỆ THỐNG QUẢN LÝ RẠP CHIẾU PHIM
+Mô hình kiến trúc: 3-Tier Architecture (Presentation - Business - Data)
+Dự án: Cinema Management System
+====================================================================
+
+1. TẦNG GIAO DIỆN (PRESENTATION LAYER - UI)
+   - Màn hình Quản lý Phim: Cho phép thêm, sửa, xóa, tìm kiếm danh mục phim.
+   - Màn hình Quản lý Lịch chiếu: Sắp xếp suất chiếu theo phòng chiếu và khung giờ.
+   - Màn hình Bán vé & Sơ đồ ghế: Hiển thị trực quan trạng thái ghế (Trống / Đang chọn / Đã bán), chọn dịch vụ Combo.
+   - Màn hình Báo cáo & Thống kê: Hiển thị báo cáo doanh thu bán vé và dịch vụ theo ngày/tháng.
+
+2. TẦNG XỬ LÝ NGHIỆP VỤ (BUSINESS LOGIC LAYER - BLL)
+   - MovieService: Xử lý hợp lệ dữ liệu phim, cập nhật trạng thái phim (Đang chiếu / Sắp chiếu / Đã dừng).
+   - ShowtimeService: Kiểm tra và ngăn chặn trùng lịch chiếu tại cùng 1 phòng chiếu và khung giờ.
+   - TicketBookingService: Tính tổng tiền vé (Giá vé cơ bản x Hệ số loại ghế + Giá Combo - Giảm giá), thực hiện giữ vị trí ghế tránh xung đột đặt đè.
+   - ReportService: Xử lý tính toán tổng hợp số liệu doanh thu.
+
+3. TẦNG DỮ LIỆU & TRUY XUẤT CSDL (DATA ACCESS LAYER - DAL & DATABASE)
+   - Hệ quản trị CSDL: MySQL / SQL Server / PostgreSQL.
+   - Cấu trúc các bảng CSDL (Entities):
+     + Phim (MaPhim, TenPhim, ThoiLuong, TheLoai, DoTuoi, TrangThai)
+     + PhongChieu (MaPhong, TenPhong, SucChua, LoaiManHinh)
+     + Ghe (MaGhe, MaPhong, Hang, SoGhe, LoaiGhe)
+     + SuatChieu (MaSuatChieu, MaPhim, MaPhong, NgayChieu, GioBatDau, GioKetThuc, GiaCoBan)
+     + Ve (MaVe, MaSuatChieu, MaGhe, MaHoaDon, TrangThaiVe)
+     + HoaDon (MaHoaDon, NgayLap, TongTien, NhanVienThucHien)
+   - Repositories / DAO: Đảm nhận thực thi các câu lệnh truy xuất đọc/ghi dữ liệu từ Database.
